@@ -7,8 +7,4 @@ const Canvas = () => {
   )
 };
 
-//getting to commit again
-//getting to commit
-//trying another one
-//adding another change for test
 export default Canvas
