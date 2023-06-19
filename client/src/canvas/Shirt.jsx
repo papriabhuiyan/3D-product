@@ -16,7 +16,7 @@ const Shirt = () => {
         easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
     })
 
-    const stateString = JSON.stringify(state)
+    const stateString = JSON.stringify(snap)
     return (
         <group
             key={stateString}
