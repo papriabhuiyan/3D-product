@@ -11,6 +11,15 @@ import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../compone
 
 const Customizer = () => {
   const snap =useSnapshot(state);
+  const [file, setFile] = useState('')
+  cosnt [prompt, setPrompt] = useState('')
+const [generatingImg, setGeneratingImg] = useState(false)
+
+  //this function shows the content of the tab that is active
+  const generateTabContent = () => {
+    //does not take a parameter because we are going to keeps tabs on the active tab using the state
+
+  }
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -52,6 +61,8 @@ const Customizer = () => {
               <Tab
                 key={tab.name}
                 tab = {tab}
+                isFilterTab
+                isActiveTab=""
                 handleClick ={() => {}}
               />
             ))}
