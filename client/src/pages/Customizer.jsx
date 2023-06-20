@@ -12,8 +12,8 @@ import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../compone
 const Customizer = () => {
   const snap =useSnapshot(state);
   const [file, setFile] = useState('')
-  cosnt [prompt, setPrompt] = useState('')
-const [generatingImg, setGeneratingImg] = useState(false)
+  const [prompt, setPrompt] = useState('')
+  const [generatingImg, setGeneratingImg] = useState(false)
 
   //this function shows the content of the tab that is active
   const generateTabContent = () => {
