@@ -14,7 +14,7 @@ const Customizer = () => {
   const [file, setFile] = useState('')
   const [prompt, setPrompt] = useState('')
   const [generatingImg, setGeneratingImg] = useState(false)
-
+  //const [activeEditorTab, setActiveEditorTab]
   //this function shows the content of the tab that is active
   const generateTabContent = () => {
     //does not take a parameter because we are going to keeps tabs on the active tab using the state
