@@ -62,10 +62,17 @@ const Customizer = () => {
           prompt,
         })
       })
+      if(!response.ok){
+        throw new Error("Error fetching image")
+      }
 
       const data = await response.json();
+      console.log(data)
+      const imageUrl = data
+      console.log("Hello")
+      console.log(imageUrl)
 
-      handleDecals(type, `data:image/png;base64,${data.photo}`)
+      handleDecals(type, imageUrl)
     } catch (error) {
       alert(error)
     } finally {
@@ -97,6 +104,8 @@ const Customizer = () => {
         state.isFullTexture = false;
         break;
     }
+
+    // after setting the state, activeFilterTab is updated
 
     setActiveFilterTab((prevState) => {
       return {

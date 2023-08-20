@@ -1,16 +1,19 @@
-import express from 'express';
-import * as dotenv from 'dotenv';
-import cors from 'cors';
-
-// import dalleRoutes from './routes/dalle.routes.js';
+import express from 'express'
+import * as dotenv from 'dotenv'
+import cors from 'cors'
+import dalleRoutes from './routes/dalle.routes.js'
 
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+  origin: 'http://127.0.0.1:5173', // Replace with your frontend URL
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 app.use(express.json({ limig: "50mb" }))
 
-// app.use("/api/v1/dalle", dalleRoutes);
+app.use("/api/v1/dalle", dalleRoutes);
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: "Hello from DALL.E" })
