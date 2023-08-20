@@ -35,13 +35,13 @@ const Customizer = () => {
           setFile={setFile}
           readFile={readFile}
         />
-      case "aipicker":
-        return <AIPicker 
-          prompt={prompt}
-          setPrompt={setPrompt}
-          generatingImg={generatingImg}
-          handleSubmit={handleSubmit}
-        />
+      // case "aipicker":
+      //   return <AIPicker 
+      //     prompt={prompt}
+      //     setPrompt={setPrompt}
+      //     generatingImg={generatingImg}
+      //     handleSubmit={handleSubmit}
+      //   />
       default:
         return null;
     }
@@ -54,6 +54,7 @@ const Customizer = () => {
       setGeneratingImg(true);
 
       const response = await fetch('http://localhost:8080/api/v1/dalle', {
+        // mode: "no-cors",
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
