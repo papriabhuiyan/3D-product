@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
-
+import OpenAI from 'openai';
 import config from '../config/config';
 import state from '../store';
 import { download } from '../assets';
@@ -9,6 +9,7 @@ import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
+
 
 const Customizer = () => {
   const snap = useSnapshot(state);
@@ -35,13 +36,13 @@ const Customizer = () => {
           setFile={setFile}
           readFile={readFile}
         />
-      // case "aipicker":
-      //   return <AIPicker 
-      //     prompt={prompt}
-      //     setPrompt={setPrompt}
-      //     generatingImg={generatingImg}
-      //     handleSubmit={handleSubmit}
-      //   />
+      case "aipicker":
+        return <AIPicker 
+          prompt={prompt}
+          setPrompt={setPrompt}
+          generatingImg={generatingImg}
+          handleSubmit={handleSubmit}
+        />
       default:
         return null;
     }
@@ -53,26 +54,26 @@ const Customizer = () => {
     try {
       setGeneratingImg(true);
 
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
-        // mode: "no-cors",
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          prompt,
-        })
-      })
-      if(!response.ok){
-        throw new Error("Error fetching image")
-      }
+      // const response = await fetch('http://localhost:8080/api/v1/dalle', {
+      //   // mode: "no-cors",
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json'
+      //   },
+      //   body: JSON.stringify({
+      //     prompt,
+      //   })
+      // })
+      // if(!response.ok){
+      //   throw new Error("Error fetching image")
+      // }
 
-      const data = await response.json();
-      console.log(data)
-      const imageUrl = data
-      console.log("Hello")
-      console.log(imageUrl)
-
+      // const data = await response.json();
+      // console.log(data)
+      // const imageUrl = data
+      // console.log("Hello")
+      // console.log(imageUrl)
+      
       handleDecals(type, imageUrl)
     } catch (error) {
       alert(error)
