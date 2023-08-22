@@ -10,7 +10,7 @@ import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
-const API_KEY= "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"
+const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -71,7 +71,7 @@ const Customizer = () => {
       const response = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
         headers: {
-          "Authorization": `Bearer ${API_KEY}`,
+          "Authorization": `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -84,7 +84,7 @@ const Customizer = () => {
       const data = await response.json();
       console.log(data)
       const imageBase64 = data.data[0].b64_json
-      handleDecals(type, `data:image/png;base64,$${imageBase64}`)
+      handleDecals(type, `data:image/png;base64,${imageBase64}`)
 
     } catch (error) {
       alert(error)

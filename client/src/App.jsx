@@ -3,7 +3,6 @@ import Customizer from './pages/Customizer'
 import Home from './pages/Home'
 //adding something to commit test
 function App() {
-
   return (
     <main className='app transition-all ease-in'>
       <Home />
