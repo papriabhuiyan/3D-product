@@ -9,13 +9,9 @@ import { downloadCanvasToImage, reader } from '../config/helpers';
 import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
-// import * as dotenv from 'dotenv';
-// dotenv.config();
+
 const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-// const REACT_APP_API_KEY="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"
-// const API_KEY= "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"
 const Customizer = () => {
-  // const apiKey = process.env.REACT_APP_API_KEY;
   const snap = useSnapshot(state);
 
   const [file, setFile] = useState('');
