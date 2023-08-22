@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useSnapshot } from 'valtio';
-
+import OpenAI from 'openai';
 import config from '../config/config';
 import state from '../store';
 import { download } from '../assets';
@@ -10,6 +10,7 @@ import { EditorTabs, FilterTabs, DecalTypes } from '../config/constants';
 import { fadeAnimation, slideAnimation } from '../config/motion';
 import { AIPicker, ColorPicker, CustomButton, FilePicker, Tab } from '../components';
 
+const API_KEY= "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"
 const Customizer = () => {
   const snap = useSnapshot(state);
 
@@ -24,6 +25,7 @@ const Customizer = () => {
     stylishShirt: false,
   })
 
+  
   // show tab content depending on the activeTab
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -35,13 +37,13 @@ const Customizer = () => {
           setFile={setFile}
           readFile={readFile}
         />
-      // case "aipicker":
-      //   return <AIPicker 
-      //     prompt={prompt}
-      //     setPrompt={setPrompt}
-      //     generatingImg={generatingImg}
-      //     handleSubmit={handleSubmit}
-      //   />
+      case "aipicker":
+        return <AIPicker 
+          prompt={prompt}
+          setPrompt={setPrompt}
+          generatingImg={generatingImg}
+          handleSubmit={handleSubmit}
+        />
       default:
         return null;
     }
@@ -49,31 +51,41 @@ const Customizer = () => {
 
   const handleSubmit = async (type) => {
     if(!prompt) return alert("Please enter a prompt");
-
+    // const options = {
+    //   method: "POST",
+    //   headers: {
+    //     "Authorization" : `Bearer ${process.env.OPENAI_API_KEY}`,
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     "prompt": prompt,
+    //     "n": 1,
+    //     "size": "256x256"
+    //   })
+    // }
     try {
       setGeneratingImg(true);
-
-      const response = await fetch('http://localhost:8080/api/v1/dalle', {
-        // mode: "no-cors",
+      // const response = await fetch('https://api.openai.com/v1/images/generations', options)
+      // const data = await response.json()
+      // console.log(data)
+      const response = await fetch('https://api.openai.com/v1/images/generations', {
         method: 'POST',
         headers: {
+          "Authorization": `Bearer ${API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           prompt,
+          "size": "256x256",
+          "response_format": "b64_json"
         })
       })
-      if(!response.ok){
-        throw new Error("Error fetching image")
-      }
 
       const data = await response.json();
       console.log(data)
-      const imageUrl = data
-      console.log("Hello")
-      console.log(imageUrl)
+      const imageBase64 = data.data[0].b64_json
+      handleDecals(type, `data:image/png;base64,$${imageBase64}`)
 
-      handleDecals(type, imageUrl)
     } catch (error) {
       alert(error)
     } finally {
@@ -83,6 +95,7 @@ const Customizer = () => {
   }
 
   const handleDecals = (type, result) => {
+    console.log(result)
     const decalType = DecalTypes[type];
 
     state[decalType.stateProperty] = result;
